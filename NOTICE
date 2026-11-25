@@ -1,0 +1,10 @@
+babydsp reconstructs libasound_module_pcm_babydsp.so, the ALSA plugin that
+Logitech shipped as a binary in SqueezeOS 7.x for the Squeezebox Radio
+(package squeezeos-dsp-bin, marked LICENSE = "Confidential"). The filter
+structure and coefficients were taken from that binary.
+
+The code in this repository is Copyright (C) 2026 deepivin and licensed under
+the GNU Lesser General Public License, version 2.1 or (at your option) any
+later version; see LICENSE. That licence covers only the rights its authors
+hold. It grants no rights in Logitech's original plugin. This project is not
+affiliated with or endorsed by Logitech.
