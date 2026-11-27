@@ -4,10 +4,10 @@
 # is compiled and linked against. Nothing from it is installed on the radio.
 #
 # Usage: ./alsa-lib.sh [CROSS_COMPILE] [SYSROOT]
-#   defaults: arm-none-linux-gnueabi- sysroot
+#   defaults: arm-linux- sysroot
 set -eu
 
-CROSS=${1:-arm-none-linux-gnueabi-}
+CROSS=${1:-arm-linux-}
 SYSROOT=$(realpath -m "${2:-sysroot}")
 VER=1.0.18
 TAR=alsa-lib-$VER.tar.bz2

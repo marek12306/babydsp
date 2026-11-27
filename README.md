@@ -33,26 +33,30 @@ history between all instances in a process).
 
 ## Building
 
-The radio runs SqueezeOS userspace: glibc and alsa-lib 1.0.18. The plugin is
-therefore built with an ARM glibc toolchain whose libc is not newer than the
-radio's (the result may only need `GLIBC_2.4` symbols) and against alsa-lib
-1.0.18.
+The radio runs SqueezeOS userspace: glibc 2.11.1 and alsa-lib 1.0.18. The
+plugin is built with an ARM EABI soft-float glibc toolchain and against
+alsa-lib 1.0.18. The toolchain's glibc may be newer than the radio's: ARM EABI
+glibc versions all the functions the plugin calls at `GLIBC_2.4`, the oldest
+ARM EABI version, so the result needs `GLIBC_2.4` symbols only (check below).
 
-The original was built with **Sourcery G++ Lite 2010q1-202 for ARM GNU/Linux**
-(`arm-none-linux-gnueabi`, GCC 4.4.1, upstream file
-`arm-2010q1-202-arm-none-linux-gnueabi-i686-pc-linux-gnu.tar.bz2`; no longer
-hosted by Mentor). Its host binaries are 32-bit x86; on 64-bit Debian or Ubuntu
-install `libc6-i386 lib32z1` first.
+[linux-baby-build](https://github.com/marek12306/linux-baby-build) builds it
+with Bootlin's `armv5-eabi--glibc--stable-2024.05-1` (GCC 13.3, glibc 2.39),
+tested on the radio:
 
 ```sh
-export PATH=/path/to/arm-2010q1/bin:$PATH
+curl -sSfL https://toolchains.bootlin.com/downloads/releases/toolchains/armv5-eabi/tarballs/armv5-eabi--glibc--stable-2024.05-1.tar.xz | tar -xJ
+export PATH=$PWD/armv5-eabi--glibc--stable-2024.05-1/bin:$PATH
 make
 ```
 
 `make` downloads alsa-lib 1.0.18 (SHA-256 checked), cross-builds it with the
 SqueezeOS configure options into `sysroot/`, then builds and strips
 `libasound_module_pcm_babydsp.so`. Another toolchain prefix or sysroot:
-`make CROSS_COMPILE=arm-linux-gnueabi- SYSROOT=/path/to/alsa`.
+`make CROSS_COMPILE=arm-none-linux-gnueabi- SYSROOT=/path/to/alsa`.
+
+The plugin shipped in SqueezeOS 7.x was built with Sourcery G++ Lite
+2010q1-202 (`arm-none-linux-gnueabi`, GCC 4.4.1), which is no longer hosted
+by Mentor.
 
 Check the result:
 

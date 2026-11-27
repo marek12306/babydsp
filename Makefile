@@ -3,10 +3,11 @@
 #   make                 plugin for the radio (needs the cross toolchain)
 #   make test            host unit test (needs the host's ALSA headers)
 #
-# The radio's userspace is SqueezeOS glibc with alsa-lib 1.0.18, so the
-# plugin is built with a glibc toolchain no newer than that libc (it needs
-# GLIBC_2.4 symbols only) against alsa-lib 1.0.18 (alsa-lib.sh).
-CROSS_COMPILE ?= arm-none-linux-gnueabi-
+# The radio's userspace is SqueezeOS glibc 2.11.1 with alsa-lib 1.0.18. The
+# plugin is built with an ARM EABI glibc toolchain (any glibc version: the
+# functions it calls are all GLIBC_2.4) against alsa-lib 1.0.18
+# (alsa-lib.sh). Default prefix: Bootlin's armv5-eabi glibc toolchain.
+CROSS_COMPILE ?= arm-linux-
 SYSROOT ?= sysroot
 CC := $(CROSS_COMPILE)gcc
 STRIP := $(CROSS_COMPILE)strip
